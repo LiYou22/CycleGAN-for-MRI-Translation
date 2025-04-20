@@ -27,7 +27,7 @@ class Config:
     
     # Training
     batch_size = 1
-    num_epochs = 30
+    num_epochs = 1
     generator_type = 'resnet'
     resume_training = True
     seed = 42
@@ -166,12 +166,7 @@ def evaluate_model(model, dataloader, device):
             # G loss            
             g_loss = (g_xtoy_loss + g_ytox_loss + cycle_x_loss + cycle_y_loss + idt_loss_x + idt_loss_y)
 
-            val_g_losses.append(g_loss.item())
-            val_d_x_losses.append(d_x_loss.item())
-            val_d_y_losses.append(d_y_loss.item())
-            val_cycle_losses.append((cycle_x_loss + cycle_y_loss).item())
-            val_identity_losses.append((idt_loss_x + idt_loss_y).item())
-
+            # Record losses
             val_g_losses.append(g_loss.item())
             val_d_x_losses.append(d_x_loss.item())
             val_d_y_losses.append(d_y_loss.item())
