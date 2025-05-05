@@ -176,6 +176,5 @@ cython_debug/
 # Project specifics
 data/
 checkpoints/
-visualizations/
 
 
