@@ -1,7 +1,7 @@
-python>=3.12.0
 numpy>=2.0.0
 torch>=2.0.0
 torchvision>=0.15.0
+torchmetrics>=1.7.0
 matplotlib>=3.0.0
 nibabel>=5.0.0
 scipy>=1.0.0

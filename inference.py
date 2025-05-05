@@ -1,9 +1,9 @@
 import os
-import torch
 import random
+import torch
 import matplotlib.pyplot as plt
 from models.cyclegan import CycleGAN
-from datasets import MRIT1T2Dataset
+from dataset import MRIT1T2Dataset
 from utils.seed_utils import set_seed
 
 
@@ -72,9 +72,12 @@ def visualize_inference(model, real_t1_tensor, real_t2_tensor, device='cpu', sav
 
 def load_model_from_checkpoint(checkpoint_path: str, device: str = "cpu", generator_type: str = "resnet"):
     model = CycleGAN(generator_type=generator_type, device=device)
-    
-    checkpoint = torch.load(checkpoint_path, map_location=device)
-    print(f"Loaded checkpoint from epoch {checkpoint['epoch']}")
+    try:
+        checkpoint = torch.load(checkpoint_path, map_location=device)
+        print(f"Loaded checkpoint from epoch {checkpoint['epoch']}")
+    except FileNotFoundError as e:
+        print(f"Falied to load the checkpoint")
+        raise e
     
     model.G_XtoY.load_state_dict(checkpoint['G_XtoY_state'])
     model.G_YtoX.load_state_dict(checkpoint['G_YtoX_state'])
@@ -113,8 +116,8 @@ def main():
     model = load_model_from_checkpoint(best_model_path, device=device, generator_type=generator_type)
     
     dataset = MRIT1T2Dataset(
-        t1_dir='../data/IXI-T1',
-        t2_dir='../data/IXI-T2',
+        t1_dir='./data/IXI-T1',
+        t2_dir='./data/IXI-T2',
         slice_mode='middle',
         paired=True,
         transform=None,
